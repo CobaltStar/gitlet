@@ -1,0 +1,236 @@
+I definitions.inc
+> init
+<<<
++ file1.txt aaaaaaaaa.txt
++ file2.txt AAAAAAAAAA.txt
++ file3.txt h.txt
++ file4.txt asdf.txt
++ file5.txt idk.txt
++ file6.txt 177013.txt
++ file7.txt awa.txt
++ file8.txt 69.txt
+> status
+=== Branches ===
+\*master
+
+=== Staged Files ===
+
+=== Removed Files ===
+
+=== Modifications Not Staged For Commit ===
+
+=== Untracked Files ===
+file1.txt
+file2.txt
+file3.txt
+file4.txt
+file5.txt
+file6.txt
+file7.txt
+file8.txt
+
+<<<*
+> add file1.txt
+<<<
+> add file2.txt
+<<<
+> add file3.txt
+<<<
+> rm file2.txt
+<<<
+> status
+=== Branches ===
+\*master
+
+=== Staged Files ===
+file1.txt
+file3.txt
+
+=== Removed Files ===
+
+=== Modifications Not Staged For Commit ===
+
+=== Untracked Files ===
+file2.txt
+file4.txt
+file5.txt
+file6.txt
+file7.txt
+file8.txt
+
+<<<*
+> commit "1 and 3"
+<<<
+> status
+=== Branches ===
+\*master
+
+=== Staged Files ===
+
+=== Removed Files ===
+
+=== Modifications Not Staged For Commit ===
+
+=== Untracked Files ===
+file2.txt
+file4.txt
+file5.txt
+file6.txt
+file7.txt
+file8.txt
+
+<<<*
+# does nothing
+> rm file7.txt
+No reason to remove the file.
+<<<*
+> rm file1.txt
+<<<
+> add file2.txt
+<<<
+> add file6.txt
+<<<
+> add file8.txt
+<<<
+# test deleting tracked file
+- file3.txt
+# should not be in staging area
+> rm file8.txt
+<<<
+> status
+=== Branches ===
+\*master
+
+=== Staged Files ===
+file2.txt
+file6.txt
+
+=== Removed Files ===
+file1.txt
+
+=== Modifications Not Staged For Commit ===
+file3.txt \(deleted\)
+
+=== Untracked Files ===
+file4.txt
+file5.txt
+file7.txt
+file8.txt
+
+<<<*
+> commit "2, 3, and 6"
+<<<
+> status
+=== Branches ===
+\*master
+
+=== Staged Files ===
+
+=== Removed Files ===
+
+=== Modifications Not Staged For Commit ===
+file3.txt \(deleted\)
+
+=== Untracked Files ===
+file4.txt
+file5.txt
+file7.txt
+file8.txt
+
+<<<*
+> add file4.txt
+<<<
+# modified after getting staged
++ file4.txt aaaaaaaaa.txt
+> rm file6.txt
+<<<
+# should be considered untracked and staged for removal
++ file6.txt 177013.txt
++ file2.txt aaaaaaaaa.txt
+> add file2.txt
+<<<
+# should be gone from staging area and be staged for removal
+> rm file2.txt
+<<<
+> branch not-master
+<<<
+# modified from version in current commit
++ file3.txt 177013.txt
+
+> status
+=== Branches ===
+\*master
+not-master
+
+=== Staged Files ===
+file4.txt
+
+=== Removed Files ===
+file2.txt
+file6.txt
+
+=== Modifications Not Staged For Commit ===
+file3.txt \(modified\)
+file4.txt \(modified\)
+
+=== Untracked Files ===
+file5.txt
+file6.txt
+file7.txt
+file8.txt
+
+<<<*
+> add file3.txt
+<<<
+# reverting it back to what the commit initially had
++ file3.txt h.txt
+> add file3.txt
+<<<
+# staged for addition followed by deletion
+> add file5.txt
+<<<
+- file5.txt
+> status
+=== Branches ===
+\*master
+not-master
+
+=== Staged Files ===
+file4.txt
+file5.txt
+
+=== Removed Files ===
+file2.txt
+file6.txt
+
+=== Modifications Not Staged For Commit ===
+file4.txt \(modified\)
+file5.txt \(deleted\)
+
+=== Untracked Files ===
+file6.txt
+file7.txt
+file8.txt
+
+<<<*
+> commit "3, 4, and 5; 4 has been modified"
+<<<
+> status
+=== Branches ===
+\*master
+not-master
+
+=== Staged Files ===
+
+=== Removed Files ===
+
+=== Modifications Not Staged For Commit ===
+file4.txt \(modified\)
+file5.txt \(deleted\)
+
+=== Untracked Files ===
+file6.txt
+file7.txt
+file8.txt
+
+<<<*

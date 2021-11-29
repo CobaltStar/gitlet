@@ -1,0 +1,27 @@
+# add remove status test
+I definitions.inc
+> init
+<<<
++ wug.txt wug.txt
++ notwug.txt notwug.txt
+> add wug.txt
+<<<
+> add notwug.txt
+<<<
+> rm notwug.txt
+<<<
+> status
+=== Branches ===
+\*master
+
+=== Staged Files ===
+wug.txt
+
+=== Removed Files ===
+
+=== Modifications Not Staged For Commit ===
+
+=== Untracked Files ===
+${ARBLINES}
+
+<<<*

@@ -1,0 +1,29 @@
+> init
+<<<
++ wug.txt wug.txt
+> add wug.txt
+<<<
+> commit "first on master"
+<<<
+> branch current
+<<<
+> checkout current
+<<<
++ notwug.txt notwug.txt
+> add notwug.txt
+<<<
+> commit "first on current"
+<<<
+> branch given
+<<<
+> checkout given
+<<<
+> rm wug.txt
+<<<
+> commit "first on given"
+<<<
+> checkout current
+<<<
+> merge given
+Current branch fast-forwarded.
+<<<

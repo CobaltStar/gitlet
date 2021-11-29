@@ -1,0 +1,48 @@
+# test the find functionality
+I definitions.inc
+> init
+<<<
++ wug.txt wug.txt
+> add wug.txt
+<<<
+> commit "based"
+<<<
+> branch bruh
+<<<
+> checkout bruh
+<<<
++ wug.txt notwug.txt
+> add wug.txt
+<<<
+> commit "based"
+<<<
+= wug.txt notwug.txt
++ cringe.txt notwug.txt
+> add cringe.txt
+<<<
+> commit "cringe"
+<<<
+> checkout master
+<<<
+= wug.txt wug.txt
++ cringe.txt notwug.txt
+> add cringe.txt
+<<<
+> commit "mega cringe"
+<<<
+> checkout bruh
+<<<
+> find based
+${ARBLINE}
+${ARBLINE}
+<<<*
+> find cringe
+${ARBLINE}
+<<<*
+> find "mega cringe"
+${ARBLINE}
+<<<*
+> find caleb
+Found no commit with that message.
+<<<*
+

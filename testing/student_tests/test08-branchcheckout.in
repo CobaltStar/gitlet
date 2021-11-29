@@ -1,0 +1,25 @@
+# Checking branch checkout
+I definitions.inc
+> init
+<<<
++ wug.txt wug.txt
+> add wug.txt
+<<<
+> commit "added wug"
+<<<
+> branch bruh
+<<<
+> checkout bruh
+<<<
++ wug.txt notwug.txt
+> add wug.txt
+<<<
+> commit "modified wug"
+<<<
+= wug.txt notwug.txt
+> checkout master
+<<<
+= wug.txt wug.txt
+> checkout bruh
+<<<
+= wug.txt notwug.txt

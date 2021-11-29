@@ -1,0 +1,46 @@
+# Status with a removal followed by an add that restores former
+I definitions.inc
+> init
+<<<
++ wug.txt wug.txt
++ notwug.txt notwug.txt
+> add wug.txt
+<<<
+> add notwug.txt
+<<<
+> rm notwug.txt
+<<<
+> status
+=== Branches ===
+\*master
+
+=== Staged Files ===
+wug.txt
+
+=== Removed Files ===
+
+=== Modifications Not Staged For Commit ===
+
+=== Untracked Files ===
+${ARBLINES}
+
+<<<*
++ notwug.txt notwug.txt
+> add notwug.txt
+<<<
+> status
+=== Branches ===
+\*master
+
+=== Staged Files ===
+notwug.txt
+wug.txt
+
+=== Removed Files ===
+
+=== Modifications Not Staged For Commit ===
+
+=== Untracked Files ===
+${ARBLINES}
+
+<<<*

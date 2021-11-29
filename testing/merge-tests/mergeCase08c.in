@@ -1,0 +1,28 @@
+> init
+<<<
++ wug.txt wug.txt
+> add wug.txt
+<<<
+> commit "first on master"
+<<<
+> branch given
+<<<
+> branch current
+<<<
+> checkout given
+<<<
+> rm wug.txt
+<<<
+> commit "first on given"
+<<<
+> checkout current
+<<<
++ wug.txt asdf.txt
+> add wug.txt
+<<<
+> commit "first on current"
+<<<
+> merge given
+Encountered a merge conflict.
+<<<
+# causes merge conflict, check out file in directory

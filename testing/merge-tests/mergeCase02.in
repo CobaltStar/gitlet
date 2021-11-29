@@ -1,0 +1,28 @@
+> init
+<<<
++ wug.txt wug.txt
+> add wug.txt
+<<<
+> commit "first on master"
+<<<
+> branch given
+<<<
+> branch current
+<<<
+> checkout given
+<<<
++ asdf.txt asdf.txt
+> add asdf.txt
+<<<
+> commit "first on given"
+<<<
+> checkout current
+<<<
++ wug.txt notwug.txt
+> add wug.txt
+<<<
+> commit "first on current"
+<<<
+> merge given
+<<<
+= wug.txt notwug.txt

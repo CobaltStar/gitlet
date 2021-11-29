@@ -1,0 +1,31 @@
+> init
+<<<
++ asdf.txt asdf.txt
+> add asdf.txt
+<<<
+> commit "first on master"
+<<<
+> branch given
+<<<
+> branch current
+<<<
+> checkout given
+<<<
+> rm asdf.txt
+<<<
++ notwug.txt notwug.txt
+> add notwug.txt
+<<<
+> commit "first on given"
+<<<
+> checkout current
+<<<
++ wug.txt wug.txt
+> add wug.txt
+<<<
+> commit "first on current"
+<<<
+> merge given
+<<<
+E wug.txt
+= wug.txt wug.txt

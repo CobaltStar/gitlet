@@ -1,0 +1,42 @@
+# Checking branch fail cases
+I definitions.inc
+> init
+<<<
++ wug.txt wug.txt
+> add wug.txt
+<<<
+> commit "added wug"
+<<<
+> branch bruh
+<<<
+> branch bruh
+A branch with that name already exists.
+<<<
+> checkout bruh
+<<<
++ notwug.txt notwug.txt
+> add notwug.txt
+<<<
+> commit "added notwug"
+<<<
+> branch bruh
+A branch with that name already exists.
+<<<
+> rm-branch bruh
+Cannot remove the current branch.
+<<<
+> branch bruh
+A branch with that name already exists.
+<<<
+> checkout master
+<<<
+> rm-branch bruh
+<<<
+> branch bruh
+<<<
+> checkout bruh
+<<<
+> checkout poggers
+No such branch exists.
+<<<
+

@@ -1,0 +1,27 @@
+> init
+<<<
++ wug.txt wug.txt
+> add wug.txt
+<<<
+> commit "first on master"
+<<<
+> branch given
+<<<
+> checkout given
+<<<
++ notwug.txt notwug.txt
+> add notwug.txt
+<<<
+> commit "first on given"
+<<<
+> branch current
+<<<
+> checkout current
+<<<
+> rm wug.txt
+<<<
+> commit "first on current"
+<<<
+> merge given
+Given branch is an ancestor of the current branch.
+<<<

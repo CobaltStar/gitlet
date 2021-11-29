@@ -1,0 +1,735 @@
+I definitions.inc
+> init
+<<<
++ file1.txt aaaaaaaaa.txt
++ file2.txt AAAAAAAAAA.txt
++ file3.txt h.txt
++ file4.txt asdf.txt
++ file5.txt idk.txt
++ file6.txt 177013.txt
++ file7.txt awa.txt
++ file8.txt 69.txt
+> add file1.txt
+<<<
+> add file2.txt
+<<<
+> commit "1 and 2"
+<<<
+> branch "b1"
+<<<
+> add file3.txt
+<<<
+> add file4.txt
+<<<
+> commit "1, 2, 3, and 4"
+<<<
++ file1.txt 177013.txt
+> add file1.txt
+<<<
+> add file5.txt
+<<<
+> commit "1, 2, 3, 4, and 5, modified 1"
+<<<
+> branch "b1"
+A branch with that name already exists.
+<<<
+> branch "master"
+A branch with that name already exists.
+<<<
+> branch b2
+<<<
+> log
+===
+${COMMIT_HEAD}
+1, 2, 3, 4, and 5, modified 1
+
+===
+${COMMIT_HEAD}
+1, 2, 3, and 4
+
+===
+${COMMIT_HEAD}
+1 and 2
+
+===
+${COMMIT_HEAD}
+initial commit
+
+<<<*
+# UID of the "1 and 2" commit
+D UID1_2 "${3}"
+> checkout master
+No need to checkout the current branch.
+<<<
+> checkout cringe
+No such branch exists.
+<<<
+> checkout b1
+<<<
+> log
+===
+commit ${UID1_2}
+${DATE}
+1 and 2
+
+===
+${COMMIT_HEAD}
+initial commit
+
+<<<*
+* file3.txt
+* file4.txt
+* file5.txt
+= file1.txt aaaaaaaaa.txt
+= file2.txt AAAAAAAAAA.txt
+= file6.txt 177013.txt
+= file7.txt awa.txt
+= file8.txt 69.txt
+> status
+=== Branches ===
+\*b1
+b2
+master
+
+=== Staged Files ===
+
+=== Removed Files ===
+
+=== Modifications Not Staged For Commit ===
+${ARBLINES}
+
+<<<*
++ file3.txt h.txt
+> add file3.txt
+<<<
+> commit "1, 2, and 3"
+<<<
+> log
+===
+${COMMIT_HEAD}
+1, 2, and 3
+
+===
+commit ${UID1_2}
+${DATE}
+1 and 2
+
+===
+${COMMIT_HEAD}
+initial commit
+
+<<<*
+# UID of the "1, 2, and 3" commit
+D UID1_2_3 "${1}"
+> checkout b2
+<<<
+> log
+===
+${COMMIT_HEAD}
+1, 2, 3, 4, and 5, modified 1
+
+===
+${COMMIT_HEAD}
+1, 2, 3, and 4
+
+===
+${COMMIT_HEAD}
+1 and 2
+
+===
+${COMMIT_HEAD}
+initial commit
+
+<<<*
+= file1.txt 177013.txt
+= file2.txt AAAAAAAAAA.txt
+= file3.txt h.txt
+= file4.txt asdf.txt
+= file5.txt idk.txt
+= file6.txt 177013.txt
+= file7.txt awa.txt
+= file8.txt 69.txt
+> find "1, 2, and 3"
+${UID1_2_3}
+<<<*
+# change file1.txt, should not affect checkout as this file is still considered tracked in the current commit
++ file1.txt 69.txt
+# change file3.txt, should not affect checkout as this file is still considered tracked in the current commit
++ file3.txt aaaaaaaaa.txt
+# change file8.txt, should not affect checkout as it is untracked in both commits
++ file8.txt awa.txt
+# should not affect checkout either
+> add file1.txt
+<<<
+> rm file2.txt
+<<<
+> rm file4.txt
+<<<
+# should not affect checkout as this file is considered tracked in the current commit
++ file4.txt idk.txt
+> status
+=== Branches ===
+b1
+\*b2
+master
+
+=== Staged Files ===
+file1.txt
+
+=== Removed Files ===
+file2.txt
+file4.txt
+
+=== Modifications Not Staged For Commit ===
+${ARBLINES}
+
+<<<*
+# should clear staging area and reset all changes made above
+> checkout master
+<<<
+= file1.txt 177013.txt
+= file2.txt AAAAAAAAAA.txt
+= file3.txt h.txt
+= file4.txt asdf.txt
+= file5.txt idk.txt
+= file6.txt 177013.txt
+= file7.txt awa.txt
+= file8.txt awa.txt
+> status
+=== Branches ===
+b1
+b2
+\*master
+
+=== Staged Files ===
+
+=== Removed Files ===
+
+=== Modifications Not Staged For Commit ===
+${ARBLINES}
+
+<<<*
+# TEST WHETHER FILES IN STAGING AREA ARE CONSIDERED TRACKED (should not be considered tracked?)
+# should be considered untracked in the next commit
+> rm file1.txt
+<<<
+> commit "2, 3, 4, and 5"
+<<<
++ file1.txt 177013.txt
+> checkout b1
+There is an untracked file in the way; delete it, or add and commit it first.
+<<<
++ file1.txt aaaaaaaaa.txt
+#  file1.txt is untracked in this commit and matches the version in the b1 commit
+# overwriting a file with identical contents is still considered overwriting fsr
+> checkout b1
+There is an untracked file in the way; delete it, or add and commit it first.
+<<<
+# adding a file won't make it considered to be tracked by the current branch/commit
+> add file1.txt
+<<<
+> checkout b1
+There is an untracked file in the way; delete it, or add and commit it first.
+<<<
+# should be able to checkout now
+- file1.txt
+> checkout b1
+<<<
+* file4.txt
+* file5.txt
+= file1.txt aaaaaaaaa.txt
+= file2.txt AAAAAAAAAA.txt
+= file3.txt h.txt
+= file6.txt 177013.txt
+= file7.txt awa.txt
+= file8.txt awa.txt
+> log
+===
+commit ${UID1_2_3}
+${DATE}
+1, 2, and 3
+
+===
+commit ${UID1_2}
+${DATE}
+1 and 2
+
+===
+${COMMIT_HEAD}
+initial commit
+
+<<<*
++ file5.txt idk.txt
+# file5.txt is not tracked in this commit but is in the b2 commit
+> checkout b2
+There is an untracked file in the way; delete it, or add and commit it first.
+<<<
+- file5.txt
+# this change should be lost in the checkout to b2
++ file3.txt AAAAAAAAAA.txt
+> checkout b2
+<<<
+= file1.txt 177013.txt
+= file2.txt AAAAAAAAAA.txt
+= file3.txt h.txt
+= file4.txt asdf.txt
+= file5.txt idk.txt
+= file6.txt 177013.txt
+= file7.txt awa.txt
+= file8.txt awa.txt
+> status
+=== Branches ===
+b1
+\*b2
+master
+
+=== Staged Files ===
+
+=== Removed Files ===
+
+=== Modifications Not Staged For Commit ===
+${ARBLINES}
+
+<<<*
+> add file6.txt
+<<<
+> commit "1, 2, 3, 4, 5, and 6"
+<<<
+> log
+===
+${COMMIT_HEAD}
+1, 2, 3, 4, 5, and 6
+
+===
+${COMMIT_HEAD}
+1, 2, 3, 4, and 5, modified 1
+
+===
+${COMMIT_HEAD}
+1, 2, 3, and 4
+
+===
+${COMMIT_HEAD}
+1 and 2
+
+===
+${COMMIT_HEAD}
+initial commit
+
+<<<*
+D UID1_2_3_4_5_6 "${1}"
+D UID1_2_3_4 "${3}"
+D UID_INIT "${5}"
++ file1.txt aaaaaaaaa.txt
+# checkout should delete file1.txt and file6.txt (tracked in the commit of b2 but not the commit of master)
+> checkout master
+<<<
+* file1.txt
+* file6.txt
+= file2.txt AAAAAAAAAA.txt
+= file3.txt h.txt
+= file4.txt asdf.txt
+= file5.txt idk.txt
+= file7.txt awa.txt
+= file8.txt awa.txt
+# will restore file1.txt and file6.txt
+> checkout b2
+<<<
+= file1.txt 177013.txt
+= file2.txt AAAAAAAAAA.txt
+= file3.txt h.txt
+= file4.txt asdf.txt
+= file5.txt idk.txt
+= file6.txt 177013.txt
+= file7.txt awa.txt
+= file8.txt awa.txt
+> checkout master
+<<<
+# create file9.txt
++ file9.txt h.txt
+# recreate file1.txt
++ file1.txt 177013.txt
+> reset 69abcdef12893749
+No commit with that id exists.
+<<<
+# file1.txt is untracked and will get overwritten by this commit
+> reset ${UID1_2_3_4}
+There is an untracked file in the way; delete it, or add and commit it first.
+<<<
+# shouldn't matter if it has the same contents, will error regardless
++ file1.txt 177013.txt
+> reset ${UID1_2_3_4}
+There is an untracked file in the way; delete it, or add and commit it first.
+<<<
+- file1.txt
+# untracked in both this commit and the other commit, will not affect checkout
+> add file9.txt
+<<<
+# these changes should persist after the reset as file7.txt and file9.txt
+# are untracked in both this commit and the commit to reset to
++ file9.txt asdf.txt
++ file7.txt idk.txt
+#  file5.txt is tracked in the current commit but not in the commit to reset to, so it should get deleted
++ file5.txt AAAAAAAAAA.txt
+> reset ${UID1_2_3_4}
+<<<
+* file5.txt
+# file6.txt should not exist since there was a checkout to master, which deleted file6.txt
+* file6.txt
+= file1.txt aaaaaaaaa.txt
+= file2.txt AAAAAAAAAA.txt
+= file3.txt h.txt
+= file4.txt asdf.txt
+= file7.txt idk.txt
+= file8.txt awa.txt
+= file9.txt asdf.txt
+# staging area should be cleared
+> status
+=== Branches ===
+b1
+b2
+\*master
+
+=== Staged Files ===
+
+=== Removed Files ===
+
+=== Modifications Not Staged For Commit ===
+${ARBLINES}
+
+<<<*
++ file8.txt 69.txt
+- file7.txt
+- file9.txt
+> reset ${UID1_2_3_4_5_6}
+<<<
+* file7.txt
+* file9.txt
+= file1.txt 177013.txt
+= file2.txt AAAAAAAAAA.txt
+= file3.txt h.txt
+= file4.txt asdf.txt
+= file5.txt idk.txt
+= file6.txt 177013.txt
+= file8.txt 69.txt
+> status
+=== Branches ===
+b1
+b2
+\*master
+
+=== Staged Files ===
+
+=== Removed Files ===
+
+=== Modifications Not Staged For Commit ===
+${ARBLINES}
+
+<<<*
+> checkout b2
+<<<
+* file7.txt
+* file9.txt
+= file1.txt 177013.txt
+= file2.txt AAAAAAAAAA.txt
+= file3.txt h.txt
+= file4.txt asdf.txt
+= file5.txt idk.txt
+= file6.txt 177013.txt
+= file8.txt 69.txt
+> status
+=== Branches ===
+b1
+\*b2
+master
+
+=== Staged Files ===
+
+=== Removed Files ===
+
+=== Modifications Not Staged For Commit ===
+${ARBLINES}
+
+<<<*
+> rm-branch b1
+<<<
+> checkout b1
+No such branch exists.
+<<<
+> checkout master
+<<<
+#  file4.txt to file6.txt were all deleted since they were tracked in the master commit but not the "1, 2, and 3" commit
+> reset ${UID1_2_3}
+<<<
+* file4.txt
+* file5.txt
+* file6.txt
+* file7.txt
+* file9.txt
+= file1.txt aaaaaaaaa.txt
+= file2.txt AAAAAAAAAA.txt
+= file3.txt h.txt
+= file8.txt 69.txt
+> status
+=== Branches ===
+b2
+\*master
+
+=== Staged Files ===
+
+=== Removed Files ===
+
+=== Modifications Not Staged For Commit ===
+${ARBLINES}
+
+<<<*
+> checkout b2
+<<<
+* file7.txt
+* file9.txt
+= file1.txt 177013.txt
+= file2.txt AAAAAAAAAA.txt
+= file3.txt h.txt
+= file4.txt asdf.txt
+= file5.txt idk.txt
+= file6.txt 177013.txt
+= file8.txt 69.txt
+> status
+=== Branches ===
+\*b2
+master
+
+=== Staged Files ===
+
+=== Removed Files ===
+
+=== Modifications Not Staged For Commit ===
+${ARBLINES}
+
+<<<*
+> checkout master
+<<<
+* file4.txt
+* file5.txt
+* file6.txt
+* file7.txt
+* file9.txt
+= file1.txt aaaaaaaaa.txt
+= file2.txt AAAAAAAAAA.txt
+= file3.txt h.txt
+= file8.txt 69.txt
+> rm file1.txt
+<<<
+> rm file2.txt
+<<<
+> rm file3.txt
+<<<
+> status
+=== Branches ===
+b2
+\*master
+
+=== Staged Files ===
+
+=== Removed Files ===
+file1.txt
+file2.txt
+file3.txt
+
+=== Modifications Not Staged For Commit ===
+${ARBLINES}
+
+<<<*
+# file3 will be considered tracked in both the master (head) commit and the b2 commit
++ file3.txt awa.txt
+# should restore all the removed files and clear the staging area
+> checkout b2
+<<<
+* file7.txt
+* file9.txt
+= file1.txt 177013.txt
+= file2.txt AAAAAAAAAA.txt
+= file3.txt h.txt
+= file4.txt asdf.txt
+= file5.txt idk.txt
+= file6.txt 177013.txt
+= file8.txt 69.txt
+> status
+=== Branches ===
+\*b2
+master
+
+=== Staged Files ===
+
+=== Removed Files ===
+
+=== Modifications Not Staged For Commit ===
+${ARBLINES}
+
+<<<*
+> checkout master
+<<<
+* file4.txt
+* file5.txt
+* file6.txt
+* file7.txt
+* file9.txt
+= file1.txt aaaaaaaaa.txt
+= file2.txt AAAAAAAAAA.txt
+= file3.txt h.txt
+= file8.txt 69.txt
+# should be resetting to current commit
+> reset ${UID1_2_3}
+<<<
+* file4.txt
+* file5.txt
+* file6.txt
+* file7.txt
+* file9.txt
+= file1.txt aaaaaaaaa.txt
+= file2.txt AAAAAAAAAA.txt
+= file3.txt h.txt
+= file8.txt 69.txt
+> rm file1.txt
+<<<
+> rm file2.txt
+<<<
+> rm file3.txt
+<<<
++ file3.txt awa.txt
+> commit "initial commit"
+<<<
+> log
+===
+${COMMIT_HEAD}
+initial commit
+
+===
+commit ${UID1_2_3}
+${DATE}
+1, 2, and 3
+
+===
+commit ${UID1_2}
+${DATE}
+1 and 2
+
+===
+commit ${UID_INIT}
+${DATE}
+initial commit
+
+<<<*
+# UID of the fake "initial commit"
+D UID_EMPTY "${1}"
+# file3.txt is not tracked by master commit and will be overwritten by the checkout
+> checkout b2
+There is an untracked file in the way; delete it, or add and commit it first.
+<<<
+- file3.txt
+> checkout b2
+<<<
+* file7.txt
+* file9.txt
+= file1.txt 177013.txt
+= file2.txt AAAAAAAAAA.txt
+= file3.txt h.txt
+= file4.txt asdf.txt
+= file5.txt idk.txt
+= file6.txt 177013.txt
+= file8.txt 69.txt
+- file8.txt
+> checkout master
+<<<
+* file1.txt
+* file2.txt
+* file3.txt
+* file4.txt
+* file5.txt
+* file6.txt
+* file7.txt
+* file8.txt
+> find "initial commit"
+${ARBLINE}
+${ARBLINE}
+<<<*
+> checkout b2
+<<<
+> rm file1.txt
+<<<
+> rm file2.txt
+<<<
+> rm file3.txt
+<<<
+> rm file4.txt
+<<<
+> rm file5.txt
+<<<
+> rm file6.txt
+<<<
+> commit "initial commit"
+<<<
+> find "initial commit"
+${ARBLINE}
+${ARBLINE}
+${ARBLINE}
+<<<*
+# checking out from an empty commit to another empty commit
+> checkout master
+<<<
+* file1.txt
+* file2.txt
+* file3.txt
+* file4.txt
+* file5.txt
+* file6.txt
+* file7.txt
+* file8.txt
+> reset ${UID_INIT}
+<<<
+* file1.txt
+* file2.txt
+* file3.txt
+* file4.txt
+* file5.txt
+* file6.txt
+* file7.txt
+* file8.txt
+> global-log
+===
+${COMMIT_HEAD}
+${ARBLINE}
+
+===
+${COMMIT_HEAD}
+${ARBLINE}
+
+===
+${COMMIT_HEAD}
+${ARBLINE}
+
+===
+${COMMIT_HEAD}
+${ARBLINE}
+
+===
+${COMMIT_HEAD}
+${ARBLINE}
+
+===
+${COMMIT_HEAD}
+${ARBLINE}
+
+===
+${COMMIT_HEAD}
+${ARBLINE}
+
+===
+${COMMIT_HEAD}
+${ARBLINE}
+
+===
+${COMMIT_HEAD}
+${ARBLINE}
+
+<<<*

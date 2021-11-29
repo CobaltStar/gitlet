@@ -1,0 +1,46 @@
+# reset check
+I definitions.inc
+> init
+<<<
++ wug.txt wug.txt
+> add wug.txt
+<<<
+> commit "added wug"
+<<<
++ notwug.txt wug.txt
+> add notwug.txt
+<<<
+> commit "added notwug.txt"
+<<<
+> log
+===
+${COMMIT_HEAD}
+added notwug.txt
+
+===
+${COMMIT_HEAD}
+added wug
+
+===
+${COMMIT_HEAD}
+initial commit
+
+<<<*
+# UID of second version
+D UID2 "${1}"
+# UID of first version
+D UID1 "${2}"
+
+> reset ${2}
+<<<
+> log
+===
+${COMMIT_HEAD}
+added wug
+
+===
+${COMMIT_HEAD}
+initial commit
+
+<<<*
+
